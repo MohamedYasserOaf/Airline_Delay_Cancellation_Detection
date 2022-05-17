@@ -1,0 +1,8 @@
+1 - clean data (drop na cols) (drop rows containing NA) 
+2 - feature selection
+3 - You need to specify how are you going to use MapReduce ***everyone look into how can we implement it  
+5 - You need to hold out a validation set out of the training data to evaluate your regression models.
+6 - use descriptive analysis such as clustering and association rule mining in your project to draw any conclusions about the distribution of delay durations among different features, if there are any relations between delay durations and other factors (in the form of an association rule). 
+7 - important to visualize the data. Showing us descriptive statistics as well as informative graphs would add a very important edge to your analysis and keep your audience attention with you.
+8 - loay , galal : classification problem + data vis of relevant feats
+9 - joe , mazen : regression problem + data vis of relevant feats
