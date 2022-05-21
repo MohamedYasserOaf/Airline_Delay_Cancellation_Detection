@@ -1,0 +1,25 @@
+#Environment
+rm(list=ls())
+setwd("C:/Users/Mazen/Desktop/big data/Project")
+library(data.table)
+#READING THE DATASET
+regressionDataset <- fread("Dataset/regressionDataset.csv")
+#VISUALIZATIONS
+plot(regressionDataset$DEP_DELAY, regressionDataset$ARR_DELAY, xlab="DEP_DELAY", ylab="ARR_DELAY")
+plot(regressionDataset$CRS_ELAPSED_TIME, regressionDataset$ARR_DELAY, xlab="CRS_ELAPSED_TIME", ylab="ARR_DELAY")
+plot(regressionDataset$DISTANCE, regressionDataset$ARR_DELAY, xlab="DISTANCE", ylab="ARR_DELAY")
+plot(regressionDataset$FL_DAY, regressionDataset$ARR_DELAY, xlab="FL_DAY", ylab="ARR_DELAY")
+cor(regressionDataset$DEP_DELAY, regressionDataset$ARR_DELAY)
+cor(regressionDataset$CRS_ELAPSED_TIME, regressionDataset$ARR_DELAY)
+cor(regressionDataset$DISTANCE, regressionDataset$ARR_DELAY)
+cor(regressionDataset$FL_DAY, regressionDataset$ARR_DELAY)
+#LINEAR REGRESSION FITTING TRIAL
+linearRegressionFit<-lm(regressionDataset$ARR_DELAY~regressionDataset$OP_CARRIER + regressionDataset$ORIGIN + regressionDataset$DEST + regressionDataset$DEP_DELAY + regressionDataset$CRS_ELAPSED_TIME + regressionDataset$DISTANCE + regressionDataset$FL_DAY)
+modelSummary <- summary(linearRegressionFit)
+sink("Model Summary.txt")
+print(modelSummary)
+sink()
+prediction <- predict(linearRegressionFit)
+print(prediction)
+MSE = mean(modelSummary$residuals ^ 2)
+print(MSE)
