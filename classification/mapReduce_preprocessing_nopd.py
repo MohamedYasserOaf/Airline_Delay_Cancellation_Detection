@@ -5,12 +5,12 @@ import numpy as np
 from io import StringIO
 from datetime import datetime
 
-from sqlalchemy import false
-from sympy import appellf1
+
 
 
 class MRWordFrequencyCount(MRJob):
     
+    cols_final = []
 
     def mapper(self, _, line):
         self.cols = {"FL_DATE":0,
@@ -78,7 +78,7 @@ class MRWordFrequencyCount(MRJob):
 
         yield str(row[-1]),row
 
-    def reducer(self, key, values):
+    def combiner(self, key, values):
         total = []
         for value in values:
             app=True
@@ -88,7 +88,18 @@ class MRWordFrequencyCount(MRJob):
                     break
             if app:
                 total.append(value)
-        yield key, len(total)
+        yield "Final", total #key --> month , value --> 2d array having records
+
+    def reducer(self,key,total):
+        temp_combine = []
+        for arr_2d in total:
+            temp_combine.extend(arr_2d)
+        
+        final_data = pd.DataFrame.from_records(temp_combine)
+        final_data.to_csv("H:\college\Big data\Project_github\Airline_Delay_Cancellation_Detection\classification\Dataset\mapred_data.csv",index=False)
+        yield "None",len(temp_combine)
+
+
 
 
 
